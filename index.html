@@ -3,125 +3,355 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BAJOSMEF Player</title>
+
+<title>BAJOSMEF</title>
 
 <style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Segoe UI, sans-serif;
+}
+
 body{
-    font-family: Arial, sans-serif;
-    background:#111;
+    background:#000;
     color:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:100vh;
+    padding:30px;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
 }
 
 .player{
-    width:700px;
-    background:#2b2b2b;
-    border:3px solid #999;
-    border-radius:8px;
-    padding:15px;
-    box-shadow:0 0 20px #000;
+    background:#151515;
+    border-radius:20px;
+    padding:30px;
+    box-shadow:0 0 25px rgba(0,0,0,.5);
 }
 
-.header{
-    background:#004080;
-    padding:10px;
-    font-weight:bold;
-    font-size:20px;
+.title{
     text-align:center;
+    font-size:42px;
+    margin-bottom:25px;
+    font-weight:bold;
 }
 
-audio{
+.current-song{
+    color:#ffa640;
+    font-size:32px;
+    margin-bottom:20px;
+}
+
+#progress{
     width:100%;
-    margin-top:10px;
-}
-
-.playlist{
-    margin-top:15px;
-}
-
-.song{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:8px;
-    border-bottom:1px solid #444;
-}
-
-.song:hover{
-    background:#444;
-}
-
-button{
-    background:#00aa00;
-    color:white;
-    border:none;
-    padding:5px 12px;
     cursor:pointer;
 }
 
-button:hover{
-    background:#00cc00;
+.time{
+    text-align:center;
+    margin:15px 0;
+    font-size:22px;
+}
+
+.controls{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    margin:25px 0;
+}
+
+.controls button{
+    background:#ff7900;
+    color:white;
+    border:none;
+    width:70px;
+    height:70px;
+    border-radius:12px;
+    font-size:28px;
+    cursor:pointer;
+}
+
+.controls button:hover{
+    background:#ff9500;
+}
+
+.volume{
+    width:100%;
+    margin-top:20px;
+}
+
+.stats{
+    margin-top:15px;
+    color:#cfcfcf;
+}
+
+.playlist{
+    margin-top:25px;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.song{
+    background:#182845;
+    padding:16px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid #2b3c5f;
+    cursor:pointer;
+}
+
+.song:hover{
+    background:#ff7900;
+}
+
+.song-name{
+    font-size:20px;
 }
 
 .download{
-    background:#0066cc;
-    text-decoration:none;
+    background:#169a92;
     color:white;
-    padding:5px 12px;
-    border-radius:4px;
+    text-decoration:none;
+    padding:10px 15px;
+    border-radius:8px;
 }
-</style>
 
+.download:hover{
+    background:#1ab3ab;
+}
+
+.active{
+    background:#ff7900 !important;
+}
+
+</style>
 </head>
+
 <body>
+
+<div class="container">
 
 <div class="player">
 
-<div class="header">
-🎵 BAJOSMEF PLAYER
+<div class="title">
+🎵 BAJOSMEF 🎵
 </div>
 
-<audio id="audioPlayer" controls>
-    <source src="" type="audio/mpeg">
-</audio>
+<div class="current-song" id="currentSong">
+Seleccione una canción
+</div>
 
-<div class="playlist">
+<input type="range" id="progress" value="0">
 
-<div class="song">
-<span>GRACIAS SEÑOR</span>
-<div>
-<button onclick="playSong('GRACIAS-SEÑOR-BAJO.MP3.mpeg')">▶</button>
-<a class="download" href="GRACIAS-SEÑOR-BAJO.MP3O</span>
-<div>
-<button onclick="playSong('GRANDIOSO-BAJO.mp3.mpeg')">▶</button>
-<a class="download" href="GRANDIOSO-BAJO.mp3.mpeg" download>⬇>
-<span>LA FE 1</span>
-<div>
-<button onclick="playSong('LA-FE-1-2.mp3.mpeg')">▶</button>
-<a class="download" href="LA-FE-1-2.mp3.mpeg"lass="song">
-<span>LA FE 2</span>
-<div>
-<button onclick="playSong('LA-FE-2.mp3.mpeg')">▶</button>
-<a class="download" href="LA-FE-2.mp3.mpeg" download>⬇>
-<span>MAS ADELANTE</span>
-<div>
-<button onclick="playSong('MAS-ADELANTE-BAJO.MP3.mpeg')">▶</button>
-<a class="download" href="MAS-ADELANTE-BAJO.MP3.mpeg" downloadg">
-<span>MEDLEY REGRESO</span>
-<div>
-<button onclick="playSong('MEDLEY-REGRESO-BAJO.mp3.mpeg')">▶</button>
-<a class="download" href="MEDLEY-REGRESO-BAJO.mp3.mpeg" download>⬇</<span>OH DIOS</span>
-<div>
-<button onclick="playSong('OH-DIOS-BAJO.mp3.mpeg')">▶</button>
-<a class="download" href="OH-DIOS-BAJO.mp3.mpeg" download>⬇</aipt>
-function playSong(file){
-    let player = document.getElementById("audioPlayer");
-    player.src = file;
-    player.play();
+<div class="time">
+<span id="currentTime">0:00</span>
+ /
+<span id="duration">0:00</span>
+</div>
+
+<div class="controls">
+<button onclick="prevSong()">⏮</button>
+<button onclick="playAudio()">▶</button>
+<button onclick="pauseAudio()">⏸</button>
+<button onclick="stopAudio()">⏹</button>
+<button onclick="nextSong()">⏭</button>
+</div>
+
+🔊
+
+<input type="range" id="volume" class="volume"
+min="0" max="1" step="0.1" value="1">
+
+<div class="stats">
+<span id="totalSongs"></span> canciones disponibles
+</div>
+
+</div>
+
+<div class="playlist" id="playlist"></div>
+
+<audio id="audio"></audio>
+
+</div>
+
+<script>
+
+const songs = [
+
+{
+name:"GRACIAS SEÑOR",
+file:"GRACIAS-SEÑOR-BAJO.MP3.mpeg"
+},
+
+{
+name:"GRANDIOSO",
+file:"GRANDIOSO-BAJO.mp3.mpeg"
+},
+
+{
+name:"LA FE 1",
+file:"LA-FE-1-2.mp3.mpeg"
+},
+
+{
+name:"LA FE 2",
+file:"LA-FE-2.mp3.mpeg"
+},
+
+{
+name:"MAS ADELANTE",
+file:"MAS-ADELANTE-BAJO.MP3.mpeg"
+},
+
+{
+name:"MEDLEY REGRESO",
+file:"MEDLEY-REGRESO-BAJO.mp3.mpeg"
+},
+
+{
+name:"OH DIOS",
+file:"OH-DIOS-BAJO.mp3.mpeg"
 }
+
+];
+
+let currentIndex = 0;
+
+const audio = document.getElementById("audio");
+const playlist = document.getElementById("playlist");
+
+document.getElementById("totalSongs").innerHTML=songs.length;
+
+function loadPlaylist(){
+
+playlist.innerHTML="";
+
+songs.forEach((song,index)=>{
+
+playlist.innerHTML += `
+<div class="song" onclick="selectSong(${index})">
+<div class="song-name">${song.name}</div>
+
+<a class="download"
+href="${song.file}"
+download
+onclick="event.stopPropagation()">
+⬇ Descargar
+</a>
+
+</div>`;
+});
+
+}
+
+function selectSong(index){
+
+currentIndex=index;
+
+audio.src=songs[index].file;
+
+document.getElementById("currentSong").innerHTML=songs[index].name;
+
+audio.play();
+
+highlightSong();
+
+}
+
+function highlightSong(){
+
+document.querySelectorAll(".song").forEach(s=>s.classList.remove("active"));
+
+if(document.querySelectorAll(".song")[currentIndex])
+document.querySelectorAll(".song")[currentIndex].classList.add("active");
+
+}
+
+function playAudio(){
+audio.play();
+}
+
+function pauseAudio(){
+audio.pause();
+}
+
+function stopAudio(){
+audio.pause();
+audio.currentTime=0;
+}
+
+function nextSong(){
+
+currentIndex++;
+
+if(currentIndex>=songs.length){
+currentIndex=0;
+}
+
+selectSong(currentIndex);
+
+}
+
+function prevSong(){
+
+currentIndex--;
+
+if(currentIndex<0){
+currentIndex=songs.length-1;
+}
+
+selectSong(currentIndex);
+
+}
+
+audio.addEventListener("timeupdate",()=>{
+
+let progress=(audio.currentTime/audio.duration)*100;
+
+document.getElementById("progress").value=progress || 0;
+
+document.getElementById("currentTime").innerHTML=formatTime(audio.currentTime);
+
+document.getElementById("duration").innerHTML=formatTime(audio.duration);
+
+});
+
+document.getElementById("progress").addEventListener("input",()=>{
+
+audio.currentTime=
+(document.getElementById("progress").value/100)*audio.duration;
+
+});
+
+document.getElementById("volume").addEventListener("input",()=>{
+
+audio.volume=document.getElementById("volume").value;
+
+});
+
+audio.addEventListener("ended",nextSong);
+
+function formatTime(seconds){
+
+if(isNaN(seconds)) return "0:00";
+
+let min=Math.floor(seconds/60);
+
+let sec=Math.floor(seconds%60);
+
+if(sec<10) sec="0"+sec;
+
+return min + ":" + sec;
+
+}
+
+loadPlaylist();
+
 </script>
 
 </body>
